@@ -129,7 +129,7 @@ function getColorI(%color, %callback)
 	%green = getWord(%color, 1) * %act;
 	%blue = getWord(%color, 2) * %act;
 	%alpha = getWord(%color, 3) * %act;
-	if(%alpha == "")
+	if(%alpha > "1.0")
 		%alpha = "1.0";
 	
 	echo(%red SPC %green SPC %blue SPC %alpha);

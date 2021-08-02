@@ -37,9 +37,11 @@ function GuiEditorToy::create( %this )
 	exec("./assets/gui/guiToolbox.gui");
 	exec("./assets/gui/ColorSelectorTool.gui");
 	exec("./assets/scripts/CollisionArrayBuilder.cs");
+	exec("./assets/scripts/menuBuilder.cs");
 	//exec("./assets/scripts/GuiEditorCtrlProperties.cs");
 	exec("./assets/scripts/GuiEditorUndo.cs");
     // Set the sandbox drag mode availability.
+	
     Sandbox.allowManipulation( pan );
     Sandbox.allowManipulation( pull );
     
@@ -59,6 +61,8 @@ function GuiEditorToy::create( %this )
 
 function GuiEditorToy::initMenus( %this )
 {
+	$Gui::clipboardFile = expandPath("./clipboard.gui");
+	
    if( isObject( %this.menuGroup ) )
       %this.menuGroup.delete();
       
@@ -87,6 +91,11 @@ function GuiEditorToy::initMenus( %this )
       
       item[0] = "Undo" TAB %cmdCtrl SPC "Z" TAB "GuiEditor.undo();";
       item[1] = "Redo" TAB %cmdCtrl @ "-shift Z" TAB "GuiEditor.redo();";
+	  item[2] = "-";
+      item[3] = "Cut" TAB %cmdCtrl SPC "X" TAB "GuiEditor.saveSelection($Gui::clipboardFile); GuiEditor.deleteSelection();";
+      item[4] = "Copy" TAB %cmdCtrl SPC "C" TAB "GuiEditor.saveSelection($Gui::clipboardFile);";
+      item[5] = "Paste" TAB %cmdCtrl SPC "V" TAB "GuiEditor.loadSelection($Gui::clipboardFile);";
+      item[6] = "Select All" TAB %cmdCtrl SPC "A" TAB "GuiEditor.selectAll();";
    };
 
    %layoutmenu = new PopupMenu()
